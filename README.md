@@ -62,7 +62,7 @@ import { IMG_OBJ } from '@/constant';
 ## 小贴士
 
 以上图片变量名默认值"IMG_OBJ"和导入地址"@/constant"都可以在vscode设置或者本地项目 setting.json 里进行自行修改。
-![修改配置示例](https://td-dev-public.oss-cn-hangzhou.aliyuncs.com/maoyes-app/1742367021802635575.png)
+![修改配置示例](https://github.com/user-attachments/assets/e6c43b6e-44cd-49f0-8a10-58883c7327d9)
 
 ```
 // settings.json
