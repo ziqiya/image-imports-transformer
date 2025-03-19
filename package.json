@@ -17,16 +17,16 @@
         "command": "image-imports-transformer.transform",
         "title": "image-import-transform"
       }
-    ]
-  },
-  "menus": {
-    "editor/context": [
-      {
-        "command": "image-imports-transformer.transform",
-        "group": "1_modification",
-        "when": "resourceExtname =~ /^.(tsx|jsx)$/"
-      }
-    ]
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "image-imports-transformer.transform",
+          "group": "1_modification",
+          "when": "resourceExtname =~ /\\.(tsx|jsx)$/"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "pnpm run compile",

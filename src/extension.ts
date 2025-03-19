@@ -5,7 +5,7 @@ function toCamelCase(str: string): string {
     .split('-')
     .map((word, index) => {
       if (index === 0) {
-        return word; // 保持第一个单词的原始大小写
+        return word;
       }
       return word.charAt(0).toUpperCase() + word.slice(1);
     })
@@ -32,27 +32,10 @@ export function activate(context: vscode.ExtensionContext) {
           prompt: '请输入要使用的图片对象名称'
         })) || 'IMG_OBJ';
 
-      // 检查是否已经导入了指定的对象
-      const hasImport = new RegExp(
-        `import[^;]*{[^}]*${objName}[^}]*}[^;]*from\\s+['"]@/constant['"];?`
-      ).test(text);
-
-      // 存储所有匹配到的导入名称和文件名
       const importMap = new Map();
+      let needImport = false;
 
-      // 匹配所有 import 语句结束的位置
-      const lastImportIndex = (() => {
-        const importLines = text.split('\n');
-        let lastIndex = -1;
-        for (let i = 0; i < importLines.length; i++) {
-          if (importLines[i].trim().startsWith('import ')) {
-            lastIndex = i;
-          }
-        }
-        return lastIndex;
-      })();
-
-      // 匹配 import 语句，排除前面有 styles. 的情况
+      // 匹配 import 语句
       const importRegex =
         /import\s+(\w+)\s+from\s+['"]([^'"]+\.(?:png|jpg|jpeg|gif|svg))['"];?\n?/g;
       const requireRegex =
@@ -65,8 +48,26 @@ export function activate(context: vscode.ExtensionContext) {
         const baseFileName = fileName.split('/').pop()?.split('.')[0];
         if (baseFileName) {
           importMap.set(importName, toCamelCase(baseFileName));
+          needImport = true;
         }
       }
+
+      // 检查是否有 require 语句需要替换
+      const hasRequireMatch = requireRegex.test(text);
+      if (hasRequireMatch) {
+        needImport = true;
+      }
+
+      // 如果没有需要替换的内容，直接返回
+      if (!needImport) {
+        vscode.window.showInformationMessage('没有找到需要转换的图片导入语句!');
+        return;
+      }
+
+      // 检查是否已经导入了指定的对象
+      const hasImport = new RegExp(
+        `import[^;]*{[^}]*${objName}[^}]*}[^;]*from\\s+['"]@/constant['"];?`
+      ).test(text);
 
       // 移除所有图片导入语句
       let newContent = text.replace(importRegex, '');
@@ -87,14 +88,27 @@ export function activate(context: vscode.ExtensionContext) {
       });
 
       // 如果需要添加导入语句
-      if (!hasImport && lastImportIndex !== -1) {
-        const lines = newContent.split('\n');
-        lines.splice(
-          lastImportIndex + 1,
-          0,
-          `import { ${objName} } from '@/constant';`
-        );
-        newContent = lines.join('\n');
+      if (needImport && !hasImport) {
+        const lastImportIndex = (() => {
+          const importLines = newContent.split('\n');
+          let lastIndex = -1;
+          for (let i = 0; i < importLines.length; i++) {
+            if (importLines[i].trim().startsWith('import ')) {
+              lastIndex = i;
+            }
+          }
+          return lastIndex;
+        })();
+
+        if (lastImportIndex !== -1) {
+          const lines = newContent.split('\n');
+          lines.splice(
+            lastImportIndex + 1,
+            0,
+            `import { ${objName} } from '@/constant';`
+          );
+          newContent = lines.join('\n');
+        }
       }
 
       const fullRange = new vscode.Range(
