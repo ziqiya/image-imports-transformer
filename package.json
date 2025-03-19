@@ -3,7 +3,8 @@
   "displayName": "image-imports-transformer",
   "description": "图片import转换器插件",
   "repository": "https://github.com/ziqiya/image-imports-transformer",
-  "author": "ziqiya",
+  "publisher": "rxs-michael",
+  "author": "rxs-michael",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.98.0"
