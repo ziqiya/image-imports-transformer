@@ -1,6 +1,6 @@
 # image-imports-transformer README
 
-图片import转换器，用于微信taro小程序的图片线上化，用本地的IMG_OBJ地址代替本地文件的import。
+图片import转换器，用于微信taro小程序的图片线上化，用线上的IMG_OBJ前缀地址代替本地文件的import。
 
 ## 使用方法
 
@@ -62,7 +62,7 @@ import { IMG_OBJ } from '@/constant';
 ## 小贴士
 
 以上图片变量名默认值"IMG_OBJ"和导入地址"@/constant"都可以在vscode设置或者本地项目 setting.json 里进行自行修改。
-![修改配置示例](image.png)
+![修改配置示例](https://td-dev-public.oss-cn-hangzhou.aliyuncs.com/maoyes-app/1742367021802635575.png)
 
 ```
 // settings.json
