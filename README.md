@@ -1,6 +1,6 @@
 # image-imports-transformer README
 
-图片import转换器，用于微信taro小程序的图片线上化，用线上的IMG_OBJ前缀地址代替本地文件的import。
+图片import转换器 vscode 插件，用于微信taro小程序的图片线上化，用线上的IMG_OBJ前缀地址代替本地文件的import。
 
 ## 使用方法
 
