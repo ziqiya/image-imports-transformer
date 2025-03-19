@@ -2,6 +2,8 @@
   "name": "image-imports-transformer",
   "displayName": "image-imports-transformer",
   "description": "",
+  "repository": "https://github.com/ziqiya/image-imports-transformer",
+  "author": "ziqiya",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.98.0"
