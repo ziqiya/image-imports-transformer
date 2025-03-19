@@ -88,7 +88,7 @@ export function activate(context: vscode.ExtensionContext) {
 
       // 如果需要添加导入语句
       if (needImport && !hasImport) {
-        const lastImportIndex = (() => {
+        let lastImportIndex = (() => {
           const importLines = newContent.split('\n');
           let lastIndex = -1;
           for (let i = 0; i < importLines.length; i++) {
@@ -99,15 +99,17 @@ export function activate(context: vscode.ExtensionContext) {
           return lastIndex;
         })();
 
-        if (lastImportIndex !== -1) {
-          const lines = newContent.split('\n');
-          lines.splice(
-            lastImportIndex + 1,
-            0,
-            `import { ${objName} } from '${importPath}';`
-          );
-          newContent = lines.join('\n');
+        if (lastImportIndex === -1) {
+          lastImportIndex = 0;
         }
+
+        const lines = newContent.split('\n');
+        lines.splice(
+          lastImportIndex + 1,
+          0,
+          `import { ${objName} } from '${importPath}';`
+        );
+        newContent = lines.join('\n');
       }
 
       const fullRange = new vscode.Range(
