@@ -8,6 +8,7 @@
 
 ## Features
 
+
 用于图片import转换器，用于微信taro小程序的图片线上化，用本地的IMG_OBJ地址代替本地文件的import。IMG_OBJ结构如下：
 
 ```
@@ -58,3 +59,15 @@ IMG_OBJ.bgImageLarge
 import { IMG_OBJ } from '@/constant';
 ```
 
+## 小贴士
+
+以上图片变量名默认值"IMG_OBJ"和导入地址"@/constant"都可以在vscode设置或者本地项目 setting.json 里进行自行修改。
+![修改配置示例](image.png)
+
+```
+// settings.json
+{
+  "imageImports.importPath": "@/constant",
+  "imageImports.objectName": "IMG_OBJ"
+}
+```

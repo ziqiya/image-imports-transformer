@@ -12,21 +12,27 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
+    "configuration": {
+      "title": "Image Imports Transformer",
+      "properties": {
+        "imageImports.importPath": {
+          "type": "string",
+          "default": "@/constant",
+          "description": "图片对象的导入路径"
+        },
+        "imageImports.objectName": {
+          "type": "string",
+          "default": "IMG_OBJ",
+          "description": "图片对象的名称"
+        }
+      }
+    },
     "commands": [
       {
         "command": "image-imports-transformer.transform",
-        "title": "image-import-transform"
+        "title": "Transform Image Imports"
       }
-    ],
-    "menus": {
-      "editor/context": [
-        {
-          "command": "image-imports-transformer.transform",
-          "group": "1_modification",
-          "when": "resourceExtname =~ /\\.(tsx|jsx)$/"
-        }
-      ]
-    }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "pnpm run compile",

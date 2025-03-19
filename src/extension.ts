@@ -26,11 +26,10 @@ export function activate(context: vscode.ExtensionContext) {
       const document = editor.document;
       const text = document.getText();
 
-      const objName =
-        (await vscode.window.showInputBox({
-          placeHolder: 'IMG_OBJ',
-          prompt: '请输入要使用的图片对象名称'
-        })) || 'IMG_OBJ';
+      // 从配置中获取值
+      const config = vscode.workspace.getConfiguration('imageImports');
+      const importPath = config.get('importPath') as string;
+      const objName = config.get('objectName') as string;
 
       const importMap = new Map();
       let needImport = false;
@@ -66,7 +65,7 @@ export function activate(context: vscode.ExtensionContext) {
 
       // 检查是否已经导入了指定的对象
       const hasImport = new RegExp(
-        `import[^;]*{[^}]*${objName}[^}]*}[^;]*from\\s+['"]@/constant['"];?`
+        `import[^;]*{[^}]*${objName}[^}]*}[^;]*from\\s+['"]${importPath}['"];?`
       ).test(text);
 
       // 移除所有图片导入语句
@@ -105,7 +104,7 @@ export function activate(context: vscode.ExtensionContext) {
           lines.splice(
             lastImportIndex + 1,
             0,
-            `import { ${objName} } from '@/constant';`
+            `import { ${objName} } from '${importPath}';`
           );
           newContent = lines.join('\n');
         }
