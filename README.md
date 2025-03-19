@@ -2,6 +2,10 @@
 
 图片import转换器 vscode 插件，用于微信taro小程序的图片线上化，用线上的IMG_OBJ前缀地址代替本地文件的import。
 
+## 使用场景
+
+当Taro小程序开发完成以后，把本地图片批量转换为线上图片地址的情况，需要修改原来使用本地图片文件的代码。
+
 ## 使用方法
 
 在tsx,jsx文件右键菜单中选择"image-import-transform"或者使用cmd+shift+p在命令菜单中找到"image-import-transform"命令并使用。
