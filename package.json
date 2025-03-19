@@ -14,8 +14,17 @@
   "contributes": {
     "commands": [
       {
-        "command": "image-imports-transformer.helloWorld",
-        "title": "Hello World"
+        "command": "image-imports-transformer.transform",
+        "title": "image-import-transform"
+      }
+    ]
+  },
+  "menus": {
+    "editor/context": [
+      {
+        "command": "image-imports-transformer.transform",
+        "group": "1_modification",
+        "when": "resourceExtname =~ /^.(tsx|jsx)$/"
       }
     ]
   },
